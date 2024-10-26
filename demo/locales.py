@@ -26,7 +26,10 @@ size_list_dict_EN = csv_to_size_list(os.path.join(base_dir, "assets/size_list_EN
     color_list_dict_EN,
 ) = load_configuration(base_dir)
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
 LOCALES = {
     "face_model": {
         "en": {
@@ -215,6 +218,37 @@ LOCALES = {
             "label": "시작",
         },
     },
+<<<<<<< HEAD
+    "button_fix": {
+        "en": {
+            "label": "fix-picture",
+        },
+        "zh": {
+            "label": "修复图片",
+        },
+        "ja": {
+            "label": "修複圖片",
+        },
+        "ko": {
+            "label": "사진 수정",
+        },
+    },
+    "get_fixed_pic": {
+        "en": {
+            "label": "get_fixed_pic",
+        },
+        "zh": {
+            "label": "获取修复图片",
+        },
+        "ja": {
+            "label": "获取修複圖片",
+        },
+        "ko": {
+            "label": "사진 수정",
+        },
+    },
+=======
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
     "head_measure_ratio": {
         "en": {
             "label": "Head ratio",
@@ -555,6 +589,24 @@ LOCALES = {
             "label": "레이아웃 사진",
         },
     },
+<<<<<<< HEAD
+
+    "layout_photo_fixed": {
+        "en": {
+            "label": "after fixed pic",
+        },
+        "zh": {
+            "label": "修复后的图片",
+        },
+        "ja": {
+            "label": "画像を修正します",
+        },
+        "ko": {
+            "label": "수리 후",
+        },
+    },
+=======
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
     "download": {
         "en": {
             "label": "Download the photo after adjusting the DPI or KB size",

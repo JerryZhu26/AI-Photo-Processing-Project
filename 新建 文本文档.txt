@@ -1,0 +1,1 @@
+python -u inference.py --version v2 --task fr --upscale 1 --cfg_scale 4.0 --input inputs/demo/bfr/aligned --output results/demo_bfr_aligned --device cpu

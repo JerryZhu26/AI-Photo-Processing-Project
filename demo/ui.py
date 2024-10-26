@@ -1,13 +1,34 @@
 import gradio as gr
 import os
+<<<<<<< HEAD
+
 import pathlib
 from demo.locales import LOCALES
 from demo.processor import IDPhotoProcessor
+from PIL import Image
+from inferenceD import main_fr
+=======
+import pathlib
+from demo.locales import LOCALES
+from demo.processor import IDPhotoProcessor
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
 
 """
 只裁切模式:
 1. 如果重新上传了照片，然后点击按钮，第一次会调用不裁切的模式，第二次会调用裁切的模式
 """
+<<<<<<< HEAD
+params = {
+    "--version": "v2",
+    "--task": "fr",
+    "--upscale": 1.0,
+    "--cfg_scale": 4.0,
+    "--input": "inputs/demo/bfr/aligned",
+    "--output": "results/demo_bfr_aligned",
+    "--device": "cpu",
+}
+=======
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
 
 
 def load_description(fp):
@@ -20,6 +41,15 @@ def load_description(fp):
 
 
 def create_ui(
+<<<<<<< HEAD
+        processor: IDPhotoProcessor,
+        root_dir: str,
+        human_matting_models: list,
+        face_detect_models: list,
+        language: list,
+
+):
+=======
     processor: IDPhotoProcessor,
     root_dir: str,
     human_matting_models: list,
@@ -27,6 +57,7 @@ def create_ui(
     language: list,
 ):
 
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
     # 加载环境变量DEFAULT_LANG, 如果有且在language中，则将DEFAULT_LANG设置为环境变量
     if "DEFAULT_LANG" in os.environ and os.environ["DEFAULT_LANG"] in language:
         DEFAULT_LANG = os.environ["DEFAULT_LANG"]
@@ -43,15 +74,71 @@ def create_ui(
     if DEFAULT_FACE_DETECT_MODEL not in face_detect_models:
         DEFAULT_FACE_DETECT_MODEL = "mtcnn"
 
+<<<<<<< HEAD
+    # 创建自定义CSS
+    custom_css = """
+       #component-0 {
+           transition: background-color 0.3s ease;
+       }
+       .gradio-container {
+           transition: background-color 0.3s ease;
+       }
+       """
+
+    demo = gr.Blocks(title="HivisionIDPhotos", css=custom_css)
+
+    def update_background_color(color):
+        """更新背景颜色的函数"""
+        return f"""
+        <style>
+            /* 使用CSS变量来控制背景颜色 */
+            :root {{
+                --background-color: {color};
+            }}
+
+            /* 应用到整个容器 */
+            .gradio-container {{
+                background-color: var(--background-color) !important;
+            }}
+
+            /* 应用到主要内容区域 */
+            .contain {{
+                background-color: var(--background-color) !important;
+            }}
+        </style>
+        """
+
+    with demo:
+        gr.HTML(load_description(os.path.join(root_dir, "demo/assets/title.md")))
+
+        with gr.Accordion("页面背景设置", open=False):
+            with gr.Row():
+                bg_color_picker = gr.ColorPicker(
+                    label="选择背景颜色",
+                    value="#f0f2f6"
+                )
+                style_output = gr.HTML("")  # 改名更清晰
+
+            # 绑定事件
+        bg_color_picker.change(
+            fn=update_background_color,
+            inputs=[bg_color_picker],
+            outputs=[style_output]
+        )
+=======
     demo = gr.Blocks(title="HivisionIDPhotos")
 
     with demo:
         gr.HTML(load_description(os.path.join(root_dir, "demo/assets/title.md")))
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
         with gr.Row():
             # ------------------------ 左半边 UI ------------------------
             with gr.Column():
                 img_input = gr.Image(height=400)
+<<<<<<< HEAD
+=======
 
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
                 with gr.Row():
                     # 语言选择器
                     language_options = gr.Dropdown(
@@ -74,7 +161,11 @@ def create_ui(
 
                 # TAB1 - 关键参数 ------------------------------------------------
                 with gr.Tab(
+<<<<<<< HEAD
+                        LOCALES["key_param"][DEFAULT_LANG]["label"]
+=======
                     LOCALES["key_param"][DEFAULT_LANG]["label"]
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
                 ) as key_parameter_tab:
                     # 尺寸模式
                     with gr.Row():
@@ -84,7 +175,11 @@ def create_ui(
                             value=LOCALES["size_mode"][DEFAULT_LANG]["choices"][0],
                             min_width=520,
                         )
+<<<<<<< HEAD
+
+=======
                         
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
                     # 尺寸列表
                     with gr.Row(visible=True) as size_list_row:
                         size_list_options = gr.Dropdown(
@@ -124,13 +219,21 @@ def create_ui(
                         label=LOCALES["bg_color"][DEFAULT_LANG]["label"],
                         value=LOCALES["bg_color"][DEFAULT_LANG]["choices"][0],
                     )
+<<<<<<< HEAD
+
+=======
                     
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
                     # 自定义颜色RGB
                     with gr.Row(visible=False) as custom_color_rgb:
                         custom_color_R = gr.Number(value=0, label="R", minimum=0, maximum=255, interactive=True)
                         custom_color_G = gr.Number(value=0, label="G", minimum=0, maximum=255, interactive=True)
                         custom_color_B = gr.Number(value=0, label="B", minimum=0, maximum=255, interactive=True)
+<<<<<<< HEAD
+
+=======
                     
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
                     # 自定义颜色HEX
                     with gr.Row(visible=False) as custom_color_hex:
                         custom_color_hex_value = gr.Text(value="000000", label="Hex", interactive=True)
@@ -141,7 +244,11 @@ def create_ui(
                         label=LOCALES["render_mode"][DEFAULT_LANG]["label"],
                         value=LOCALES["render_mode"][DEFAULT_LANG]["choices"][0],
                     )
+<<<<<<< HEAD
+
+=======
                     
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
                     with gr.Row():
                         # 插件模式
                         plugin_options = gr.CheckboxGroup(
@@ -153,7 +260,11 @@ def create_ui(
 
                 # TAB2 - 高级参数 ------------------------------------------------
                 with gr.Tab(
+<<<<<<< HEAD
+                        LOCALES["advance_param"][DEFAULT_LANG]["label"]
+=======
                     LOCALES["advance_param"][DEFAULT_LANG]["label"]
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
                 ) as advance_parameter_tab:
                     head_measure_ratio_option = gr.Slider(
                         minimum=0.1,
@@ -203,7 +314,11 @@ def create_ui(
 
                 # TAB3 - 美颜 ------------------------------------------------
                 with gr.Tab(
+<<<<<<< HEAD
+                        LOCALES["beauty_tab"][DEFAULT_LANG]["label"]
+=======
                     LOCALES["beauty_tab"][DEFAULT_LANG]["label"]
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
                 ) as beauty_parameter_tab:
                     # 美白组件
                     whitening_option = gr.Slider(
@@ -256,7 +371,11 @@ def create_ui(
 
                 # TAB4 - 水印 ------------------------------------------------
                 with gr.Tab(
+<<<<<<< HEAD
+                        LOCALES["watermark_tab"][DEFAULT_LANG]["label"]
+=======
                     LOCALES["watermark_tab"][DEFAULT_LANG]["label"]
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
                 ) as watermark_parameter_tab:
                     watermark_options = gr.Radio(
                         choices=LOCALES["watermark_switch"][DEFAULT_LANG]["choices"],
@@ -320,10 +439,17 @@ def create_ui(
                         return [
                             gr.update(
                                 interactive=(
+<<<<<<< HEAD
+                                        choice
+                                        == LOCALES["watermark_switch"][language]["choices"][
+                                            1
+                                        ]
+=======
                                     choice
                                     == LOCALES["watermark_switch"][language]["choices"][
                                         1
                                     ]
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
                                 )
                             )
                         ] * 6
@@ -346,7 +472,18 @@ def create_ui(
                     elem_id="btn",
                     variant="primary"
                 )
+<<<<<<< HEAD
+                # 这个是修复图像的按钮
+                img_btn_gix = gr.Button(
+                    LOCALES["button_fix"][DEFAULT_LANG]["label"],
+                    elem_id="btn_fix",
+                    variant="primary"
+                )
 
+                # 这里是案例图像
+=======
+
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
                 example_images = gr.Examples(
                     inputs=[img_input],
                     examples=[
@@ -385,8 +522,13 @@ def create_ui(
                 )
                 # 模版照片
                 with gr.Accordion(
+<<<<<<< HEAD
+                        LOCALES["template_photo"][DEFAULT_LANG]["label"], open=False
+                ) as template_image_accordion:
+=======
                     LOCALES["template_photo"][DEFAULT_LANG]["label"], open=False
                 ) as template_image_accordion:      
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
                     img_output_template = gr.Gallery(
                         label=LOCALES["template_photo"][DEFAULT_LANG]["label"],
                         height=350,
@@ -394,7 +536,11 @@ def create_ui(
                     )
                 # 抠图图像
                 with gr.Accordion(
+<<<<<<< HEAD
+                        LOCALES["matting_image"][DEFAULT_LANG]["label"], open=False
+=======
                     LOCALES["matting_image"][DEFAULT_LANG]["label"], open=False
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
                 ) as matting_image_accordion:
                     with gr.Row():
                         img_output_standard_png = gr.Image(
@@ -404,11 +550,29 @@ def create_ui(
                             elem_id="standard_photo_png",
                         )
                         img_output_standard_hd_png = gr.Image(
+<<<<<<< HEAD
+
+=======
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
                             label=LOCALES["hd_photo_png"][DEFAULT_LANG]["label"],
                             height=350,
                             format="png",
                             elem_id="hd_photo_png",
                         )
+<<<<<<< HEAD
+                out_input_fixed = gr.Image(
+                    label=LOCALES["layout_photo_fixed"][DEFAULT_LANG]["label"],
+                    height=350,
+                    format="png",
+                    interactive=False  # 禁用交互，防止用户上传图片
+                )
+                get_fixed_pic = gr.Button(
+                    LOCALES["get_fixed_pic"][DEFAULT_LANG]["label"],
+                    elem_id="get_fixed_pic",
+                    variant="primary"
+                )
+=======
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
 
             # ---------------- 多语言切换函数 ----------------
             def change_language(language):
@@ -568,10 +732,16 @@ def create_ui(
 
             def change_color(colors, lang):
                 return {
+<<<<<<< HEAD
+                    custom_color_rgb: gr.update(visible=colors == LOCALES["bg_color"][lang]["choices"][-2]),
+                    custom_color_hex: gr.update(visible=colors == LOCALES["bg_color"][lang]["choices"][-1]),
+                }
+=======
                     custom_color_rgb: gr.update(visible = colors == LOCALES["bg_color"][lang]["choices"][-2]),
                     custom_color_hex: gr.update(visible = colors == LOCALES["bg_color"][lang]["choices"][-1]),
                 }
                 
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
 
             def change_size_mode(size_option_item, lang):
                 choices = LOCALES["size_mode"][lang]["choices"]
@@ -754,5 +924,68 @@ def create_ui(
                     notification,
                 ],
             )
+<<<<<<< HEAD
+            img_btn_gix.click(
+                fn=get_true,
+            )
+
+            img_input.change(
+                fn=img_input_change,
+                inputs=img_input,
+            )
+            get_fixed_pic.click(
+                fn=get_afterfixed_pic,
+                outputs=out_input_fixed,
+            )
 
     return demo
+
+
+# 输入图像的类
+class ImageManager:
+    def __init__(self):
+        # 初始化时创建一个 gr.Image 组件
+        self.image = gr.Image()
+
+    def set_image(self, new_image):
+        """设置并更新 image 组件的内容."""
+        self.image = new_image  # 更新 image 的显示内容
+        print(type(self.image))
+
+    def get_image(self):
+        return self.image
+
+
+# 使用示例
+image_manager = ImageManager()
+out_image_manager = ImageManager()
+
+
+def img_input_change(image):
+    image_manager.set_image(image)
+
+
+def get_afterfixed_pic():
+    if out_image_manager.get_image() is None:
+        print("还没有生成出图像")
+    else:
+        return out_image_manager.get_image()
+
+
+# 下面的是得到真正的image的函数
+
+img_output_fixed_later = gr.Image(
+    label=LOCALES["layout_photo_fixed"]["zh"]["label"],
+    height=350,
+    format="png",
+    interactive=False
+)
+
+
+def get_true():
+    print("yes")
+    main_fr(params)
+=======
+
+    return demo
+>>>>>>> 1edf8451a7cd2131590179085e6f9233f0232231
