@@ -1,1 +1,2 @@
-this is the V1 demo.
+不好意思，readme出了一些问题还没上传成功，待修复后重新上传
+
